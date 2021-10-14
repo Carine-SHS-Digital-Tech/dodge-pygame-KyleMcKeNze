@@ -103,7 +103,7 @@ while done == False:
 
         score = eachObject.deleteFallingObjects(score)
 
-        eachObject.deleteFallingObjects()
+        eachObject.deleteFallingObjects(score)
 
     character.moveCharacter(movement)
 
