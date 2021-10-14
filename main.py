@@ -107,6 +107,10 @@ while done == False:
 
     character.moveCharacter(movement)
 
+    collisions = pygame.sprite.groupcollide(allFallingObjects,charactersGroup,False,False)
+    if len(collisions)>0:
+        done = True
+
     screen.blit(background_image, [0,0])
     allFallingObjects.draw(screen)
     charactersGroup.draw(screen)
