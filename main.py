@@ -22,9 +22,13 @@ class FallingObject(pygame.sprite.Sprite):
         if self.rect.y <= 470:
             self.rect.y = self.rect.y + distance
 
-    def deleteFallingObjects(self):
+    def deleteFallingObjects(self,oldscore):
         if self.rect.y > 470:
             self.kill()
+            newscore = oldscore + 1
+            return newscore
+        else:
+            return oldscore
 
 
 
@@ -59,7 +63,7 @@ done = False                                # Loop until the user clicks the clo
 clock = pygame.time.Clock()                 # Used to manage how fast the screen updates
 black    = (   0,   0,   0)                 # Define some colors using rgb values.  These can be
 white    = ( 255, 255, 255)                 # used throughout the game instead of using rgb values.
-
+font = pygame.font.Font(None, 36)
 # Define additional Functions and Procedures here
 allFallingObjects = pygame.sprite.Group()
 
@@ -72,6 +76,7 @@ charactersGroup.add(character)
 
 movement = 0
 
+score = 0
 # -------- Main Program Loop -----------
 while done == False:
 
@@ -96,6 +101,7 @@ while done == False:
     for eachObject in (allFallingObjects.sprites()):
         eachObject.moveFallingObjects(5)
 
+        score = eachObject.deleteFallingObjects(score)
 
         eachObject.deleteFallingObjects()
 
@@ -104,6 +110,8 @@ while done == False:
     screen.blit(background_image, [0,0])
     allFallingObjects.draw(screen)
     charactersGroup.draw(screen)
+    textImg = font.render(str(score),1,white)
+    screen.blit( textImg, (10,10) )
     pygame.display.flip()                   # Go ahead and update the screen with what we've drawn.
     clock.tick(20)                          # Limit to 20 frames per second
 
